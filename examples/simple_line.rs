@@ -10,7 +10,7 @@ fn main() {
 }
 
 fn setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn(Camera2d::default());
 
     let points = vec![
         Vec2::new(-200.0, 0.0),
