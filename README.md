@@ -37,11 +37,16 @@ use bevy_2d_line::LineRenderingPlugin;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+
+        // Must be added after the `DefaultPlugins`
         .add_plugins(LineRenderingPlugin)
         .add_systems(Startup, setup)
         .run();
 }
 ```
+
+> [!IMPORTANT]
+> The `LineRenderingPlugin` must be added after the `DefaultPlugins`
 
 2. Create and spawn a `Line` component:
 
