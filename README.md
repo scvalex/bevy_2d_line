@@ -14,6 +14,7 @@ Lazily maintained at best!
 
 | Bevy Version | bevy_2d_line Version |
 |--------------|----------------------|
+| 0.15         | 0.1.3                |
 | 0.14         | 0.1.2                |
 
 ## Installation
@@ -22,7 +23,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-bevy_2d_line = "0.1.2"
+bevy_2d_line = "0.1.3"
 ```
 
 ## Usage
@@ -49,7 +50,7 @@ use bevy_2d_line::Line;
 use bevy::{color::palettes::css::{BLUE, GREEN, RED}, prelude::*};
 
 fn setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn(Camera2d::default());
 
     let points = vec![
         Vec2::new(-200.0, 0.0),
