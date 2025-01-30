@@ -1,13 +1,18 @@
 use bevy::{
+    asset::embedded_asset,
     prelude::*,
     render::{
         mesh::{
             MeshVertexAttribute, MeshVertexBufferLayoutRef, PrimitiveTopology,
             VertexAttributeValues,
-        }, render_asset::RenderAssetUsages, render_resource::{
+        },
+        render_asset::RenderAssetUsages,
+        render_resource::{
             AsBindGroup, RenderPipelineDescriptor, ShaderRef, SpecializedMeshPipelineError,
             VertexBufferLayout, VertexFormat, VertexStepMode,
-        }, sync_world::RenderEntity, Extract, RenderApp
+        },
+        sync_world::RenderEntity,
+        Extract, RenderApp,
     },
     sprite::{Material2d, Material2dKey, Material2dPlugin},
     utils::HashMap,
@@ -17,6 +22,7 @@ pub struct LineRenderingPlugin;
 
 impl Plugin for LineRenderingPlugin {
     fn build(&self, app: &mut App) {
+        embedded_asset!(app, "line.wgsl");
         app.add_plugins(Material2dPlugin::<LineMaterial>::default())
             .register_type::<Line>()
             .add_systems(Update, update_line_meshes);
@@ -50,11 +56,11 @@ pub struct LineMaterial {
 
 impl Material2d for LineMaterial {
     fn vertex_shader() -> ShaderRef {
-        "shaders/line.wgsl".into()
+        "embedded://bevy_2d_line/line.wgsl".into()
     }
 
     fn fragment_shader() -> ShaderRef {
-        "shaders/line.wgsl".into()
+        "embedded://bevy_2d_line/line.wgsl".into()
     }
 
     fn specialize(
@@ -126,10 +132,9 @@ fn update_line_meshes(
                     &handle.clone()
                 };
 
-                commands.entity(entity).insert((
-                    Mesh2d(mesh_handle),
-                    MeshMaterial2d(material_handle.clone()),
-                ));
+                commands
+                    .entity(entity)
+                    .insert((Mesh2d(mesh_handle), MeshMaterial2d(material_handle.clone())));
 
                 meshes.get_mut(id).unwrap()
             }
